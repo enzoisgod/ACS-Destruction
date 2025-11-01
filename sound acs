@@ -1,0 +1,28 @@
+--[[ 
+    Script automatique Whizz All Infini
+    WARNING: Use at your own risk! 
+]]
+
+-- Assure que le jeu est chargé
+repeat wait() until game:IsLoaded()
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Fonction qui déclenche le Whizz pour un joueur
+local function Whizz(player)
+    ReplicatedStorage.ACS_Engine.Eventos.Whizz:FireServer(player)
+end
+
+-- Fonction qui déclenche le Whizz pour tous les joueurs
+local function WhizzAll()
+    for _, player in pairs(Players:GetPlayers()) do
+        Whizz(player)
+    end
+end
+
+-- Boucle infinie pour déclencher Whizz constamment
+while true do
+    WhizzAll()
+    wait(1) -- délai en secondes entre chaque Whizz, ajuste si nécessaire
+end
