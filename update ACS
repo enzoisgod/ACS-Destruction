@@ -1,1 +1,169 @@
 
+-- Effexe - ACS Suite (script tout-en-un v1.4)
+-- Clé whitelist : "EffexeACS"
+
+task.wait(0.8)
+
+local function LoadRayfieldSafe()
+    local ok, ray = pcall(function()
+        return loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+    end)
+    if ok and ray then return ray end
+    warn("⚠️ Rayfield principal indisponible, tentative de fallback GitHub...")
+    local ok2, ray2 = pcall(function()
+        return loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+    end)
+    if ok2 and ray2 then return ray2 end
+    error("Impossible de charger Rayfield (principal + fallback).")
+end
+
+local Rayfield = LoadRayfieldSafe()
+local ICON_ID = 104365492568677
+
+local Window = Rayfield:CreateWindow({
+   Name = "Effexe - ACS Suite | v1.4",
+   Icon = ICON_ID,
+   LoadingTitle = "Effexe - ACS Suite is loading...",
+   LoadingSubtitle = "v1.4",
+   Theme = "Bloom",
+   DisableRayfieldPrompts = true,
+   DisableBuildWarnings = true,
+   ConfigurationSaving = {Enabled = true, FileName = "EffexeACS"},
+   Discord = {Enabled = true, Invite = "Q5MZxNDtWa", RememberJoins = false},
+   KeySystem = true,
+   KeySettings = {
+      Title = "Effexe - ACS Suite | Whitelist",
+      Subtitle = "Whitelist is permanent",
+      Note = "Join Discord to get the Whitelist Key (.gg/Q5MZxNDtWa)",
+      FileName = "EffexeACS_Whitelist",
+      SaveKey = true,
+      GrabKeyFromSite = false,
+      Key = {"EffexeACS"}
+   }
+})
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- === Onglet Welcome ===
+local TabWelcome = Window:CreateTab("📜 Welcome", ICON_ID)
+TabWelcome:CreateParagraph({Title = "Welcome to Effexe - ACS Suite!", Content = "If you need help join: https://discord.gg/Q5MZxNDtWa"})
+TabWelcome:CreateParagraph({Title = "Pseudo:", Content = player and player.Name or "Unknown"})
+TabWelcome:CreateParagraph({Title = "UI Controls", Content = "Sélectionnez la catégorie ACS ci-dessous."})
+
+-- Fonction exécution sécurisée
+local function ExecLoadString(url, friendlyName)
+    Rayfield:Notify({Title = friendlyName or "Effexe", Content = "Exécution en cours...", Duration = 4, Image = ICON_ID})
+    local ok, err = pcall(function()
+        loadstring(game:HttpGet(url, true))()
+    end)
+    if not ok then
+        warn("Erreur pour "..(friendlyName or url)..":", err)
+        Rayfield:Notify({Title = friendlyName or "Effexe", Content = "Erreur — voir console", Duration = 4, Image = ICON_ID})
+    else
+        Rayfield:Notify({Title = friendlyName or "Effexe", Content = "Exécuté avec succès", Duration = 3, Image = ICON_ID})
+    end
+end
+
+-- === Onglet ACS 1.7.5 ===
+local TabACS175 = Window:CreateTab("🔧 ACS 1.7.5", ICON_ID)
+TabACS175:CreateParagraph({Title = "Information", Content = "Boutons pour ACS 1.7.5."})
+
+TabACS175:CreateButton({
+    Name = "ACS Destruction",
+    Callback = function()
+        ExecLoadString("https://raw.githubusercontent.com/enzoisgod/ACS-Destruction/refs/heads/main/ACS%20Killer%20Destruc", "ACS Destruction")
+    end,
+})
+
+TabACS175:CreateButton({
+    Name = "Kill ALL 1.7.5",
+    Callback = function()
+        ExecLoadString("https://raw.githubusercontent.com/enzoisgod/ACS-Destruction/refs/heads/main/acs%20kill%20ALL", "Kill ALL 1.7.5")
+    end,
+})
+
+TabACS175:CreateButton({
+    Name = "Sound ALL",
+    Callback = function()
+        ExecLoadString("https://raw.githubusercontent.com/enzoisgod/ACS-Destruction/refs/heads/main/sound%20acs", "Sound ALL")
+    end,
+})
+
+-- === Onglet ACS 2.0.1 ===
+local TabACS201 = Window:CreateTab("🔧 ACS 2.0.1", ICON_ID)
+TabACS201:CreateParagraph({Title = "Information", Content = "Boutons pour ACS 2.0.1."})
+
+TabACS201:CreateButton({
+    Name = "Kill ALL ACS 2.0.1",
+    Callback = function()
+        ExecLoadString("https://pastefy.app/g2WErYno/raw", "Kill ALL ACS 2.0.1")
+    end,
+})
+
+-- === Onglet Games ===
+local TabGames = Window:CreateTab("🔧 Utils", ICON_ID)
+TabGames:CreateButton({
+   Name = "Infinite Yield",
+   Callback = function()
+      ExecLoadString('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/latest.lua', "Infinite Yield")
+   end,
+})
+TabGames:CreateButton({
+   Name = "SaveInstance",
+   Callback = function()
+      Rayfield:Notify({Title = "SaveInstance", Content = "Exécution en cours...", Duration = 4, Image = ICON_ID})
+      local Params = {RepoURL = "https://raw.githubusercontent.com/luau/SynSaveInstance/main/", SSI = "saveinstance"}
+      local ok, err = pcall(function()
+         local synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
+         synsaveinstance({})
+      end)
+      if not ok then
+         warn("Erreur SaveInstance :", err)
+         Rayfield:Notify({Title = "SaveInstance", Content = "Erreur — voir console", Duration = 4, Image = ICON_ID})
+      else
+         Rayfield:Notify({Title = "SaveInstance", Content = "Exécuté avec succès", Duration = 3, Image = ICON_ID})
+      end
+   end,
+})
+
+TabGames:CreateButton({
+    Name = "Version ACS",
+    Callback = function()
+        local versionText = "Version Inconnue"
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local ACS_Engine = ReplicatedStorage:FindFirstChild("ACS_Engine")
+
+        if ACS_Engine then
+            if ACS_Engine:FindFirstChild("ServerConfigs") then
+                versionText = "ACS 1.7.5"
+            elseif ACS_Engine:FindFirstChild("GameRules") then
+                versionText = "ACS 2.0.1"
+            end
+        end
+
+        Rayfield:Notify({
+            Title = "ACS Version",
+            Content = versionText,
+            Duration = 4,
+            Image = ICON_ID
+        })
+    end
+})
+
+
+-- === Onglet Credits ===
+local SigTab = Window:CreateTab("Credits", ICON_ID)
+SigTab:CreateParagraph({Title = "Signature", Content = "by enzoisgod"})
+SigTab:CreateParagraph({Title = "Contributeur", Content = "!' LainEnSpace"})
+
+-- Toggle GUI (RightShift)
+local UserInputService = game:GetService("UserInputService")
+local panelVisible = true
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.RightShift then
+        panelVisible = not panelVisible
+        if panelVisible then Rayfield:Show() else Rayfield:Hide() end
+    end
+end)
