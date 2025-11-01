@@ -102,7 +102,7 @@ TabACS201:CreateButton({
 })
 
 -- === Onglet Games ===
-local TabGames = Window:CreateTab("🔧 Utils", ICON_ID)
+local TabGames = Window:CreateTab("🛠 Utils", ICON_ID)
 TabGames:CreateButton({
    Name = "Infinite Yield",
    Callback = function()
