@@ -151,16 +151,6 @@ TabGames:CreateButton({
     end
 })
 
-local selectedPlayerName = nil
-TabGames:CreateInput({
-    Name = "Pseudo du joueur",
-    PlaceholderText = "Entrez le pseudo ici",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(text)
-        selectedPlayerName = text
-    end
-})
-
 -- Variable pour stocker le pseudo du joueur
 local selectedPlayerName = nil
 
