@@ -18,7 +18,7 @@ local function LoadRayfieldSafe()
 end
 
 local Rayfield = LoadRayfieldSafe()
-local ICON_ID = 104365492568677
+local ICON_ID = 91623743990851
 
 local Window = Rayfield:CreateWindow({
    Name = "Effexe - ACS Suite | v1.4",
