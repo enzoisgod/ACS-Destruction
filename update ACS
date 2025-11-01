@@ -151,44 +151,55 @@ TabGames:CreateButton({
     end
 })
 
-TabGames:CreateButton({
-    Name = "Copy Backpack",
-    Callback = function()
-        local Players = game:GetService("Players")
-        local LocalPlayer = Players.LocalPlayer
-        local Backpack = LocalPlayer:WaitForChild("Backpack")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:WaitForChild("Backpack")
 
-        -- Demander le nom du joueur dont copier le backpack
-        Rayfield:Prompt({
-            Title = "Copy Backpack",
-            Content = "Entrez le pseudo du joueur :",
-            Placeholder = "Pseudo du joueur",
-            SubmitText = "Copier",
-            CancelText = "Annuler",
-            Callback = function(playerName)
-                local targetPlayer = Players:FindFirstChild(playerName)
-                if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
-                    local targetBackpack = targetPlayer.Backpack
-                    for _, item in pairs(targetBackpack:GetChildren()) do
-                        -- Cloner l'objet et le mettre dans notre backpack
-                        item:Clone().Parent = Backpack
-                    end
-                    Rayfield:Notify({
-                        Title = "Copy Backpack",
-                        Content = "Backpack de "..playerName.." copié avec succès !",
-                        Duration = 4,
-                        Image = ICON_ID
-                    })
-                else
-                    Rayfield:Notify({
-                        Title = "Copy Backpack",
-                        Content = "Joueur introuvable ou Backpack vide !",
-                        Duration = 4,
-                        Image = ICON_ID
-                    })
-                end
+-- InputBox pour entrer le pseudo
+local selectedPlayerName = nil
+TabGames:CreateInput({
+    Name = "Pseudo du joueur",
+    PlaceholderText = "Entrez le pseudo ici",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(text)
+        selectedPlayerName = text
+    end
+})
+
+-- Bouton pour copier le backpack
+TabGames:CreateButton({
+    Name = "Copier Backpack",
+    Callback = function()
+        if not selectedPlayerName or selectedPlayerName == "" then
+            Rayfield:Notify({
+                Title = "Copy Backpack",
+                Content = "Veuillez entrer un pseudo valide !",
+                Duration = 4,
+                Image = ICON_ID
+            })
+            return
+        end
+
+        local targetPlayer = Players:FindFirstChild(selectedPlayerName)
+        if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
+            local targetBackpack = targetPlayer.Backpack
+            for _, item in pairs(targetBackpack:GetChildren()) do
+                item:Clone().Parent = Backpack
             end
-        })
+            Rayfield:Notify({
+                Title = "Copy Backpack",
+                Content = "Backpack de "..selectedPlayerName.." copié avec succès !",
+                Duration = 4,
+                Image = ICON_ID
+            })
+        else
+            Rayfield:Notify({
+                Title = "Copy Backpack",
+                Content = "Joueur introuvable ou Backpack vide !",
+                Duration = 4,
+                Image = ICON_ID
+            })
+        end
     end
 })
 
