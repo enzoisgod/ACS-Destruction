@@ -102,6 +102,9 @@ TabACS201:CreateButton({
 })
 
 -- === Onglet Games ===
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:WaitForChild("Backpack")
 local TabGames = Window:CreateTab("🛠 Utils", ICON_ID)
 TabGames:CreateButton({
    Name = "Infinite Yield",
@@ -151,11 +154,6 @@ TabGames:CreateButton({
     end
 })
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local Backpack = LocalPlayer:WaitForChild("Backpack")
-
--- InputBox pour entrer le pseudo
 local selectedPlayerName = nil
 TabGames:CreateInput({
     Name = "Pseudo du joueur",
