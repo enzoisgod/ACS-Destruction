@@ -1,7 +1,14 @@
---while wait() do
-    local DR = game:GetService("ReplicatedStorage")["ACS_Engine"].Eventos.Damage
- 
-for PlayerIndex,GivenPlayer in pairs(game.Players:GetPlayers()) do
-    local Char = GivenPlayer.Character
-    DR:FireServer(Char.Humanoid,Char.Humanoid.MaxHealth,0,0)
+local DR = game:GetService("ReplicatedStorage")["ACS_Engine"].Eventos.Damage
+
+while true do
+    wait(1) 
+
+    for _, player in pairs(game.Players:GetPlayers()) do
+        local char = player.Character or player.CharacterAdded:Wait()
+
+        if char then 
+            local humanoid = char.Humanoid
+            DR:FireServer(humanoid, humanoid.MaxHealth, 0, 0)
+        end
+    end
 end
