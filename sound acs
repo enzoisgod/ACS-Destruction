@@ -11,7 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Fonction qui déclenche le Whizz pour un joueur
 local function Whizz(player)
-    ReplicatedStorage.ACS_Engine.Eventos.Whizz:FireServer(player)
+    ReplicatedStorage.Site95Remote.RemoteEvent.Whizz:FireServer(player)
 end
 
 -- Fonction qui déclenche le Whizz pour tous les joueurs
