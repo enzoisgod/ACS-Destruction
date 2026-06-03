@@ -90,6 +90,13 @@ TabACS175:CreateButton({
     end,
 })
 
+TabACS175:CreateButton({
+    Name = "Surrender ALL",
+    Callback = function()
+        ExecLoadString("https://raw.githubusercontent.com/enzoisgod/ACS-Destruction/refs/heads/main/surrender", "Surrender ALL")
+    end,
+})
+
 -- === Onglet ACS 2.0.1 ===
 local TabACS201 = Window:CreateTab("🔧 ACS 2.0.1", ICON_ID)
 TabACS201:CreateParagraph({Title = "Information", Content = "Boutons pour ACS 2.0.1."})
@@ -151,10 +158,8 @@ TabGames:CreateButton({
     end
 })
 
--- Variable pour stocker le pseudo du joueur
 local selectedPlayerName = nil
 
--- InputBox pour entrer le pseudo du joueur
 TabGames:CreateInput({
     Name = "Pseudo du joueur",
     PlaceholderText = "Entrez le pseudo ici",
@@ -164,7 +169,6 @@ TabGames:CreateInput({
     end
 })
 
--- Bouton pour copier le Backpack
 TabGames:CreateButton({
     Name = "Copy Backpack",
     Callback = function()
