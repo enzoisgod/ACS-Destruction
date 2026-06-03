@@ -1,14 +1,24 @@
-local DR = game:GetService("ReplicatedStorage")["Site95Remote"].RemoteEvent.Damage
+local DR = game:GetService("ReplicatedStorage")["ACS_Engine"].Eventos.Damage
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
-while true do
-    wait(1) 
-
-    for _, player in pairs(game.Players:GetPlayers()) do
-        local char = player.Character or player.CharacterAdded:Wait()
-
-        if char then 
-            local humanoid = char.Humanoid
-            DR:FireServer(humanoid, humanoid.MaxHealth, 0, 0)
+RunService.Heartbeat:Connect(function()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= Players.LocalPlayer then -- Évite de se kill soi-même
+            local char = player.Character
+            if char and char:FindFirstChild("Humanoid") then
+                local humanoid = char.Humanoid
+                pcall(function()
+                    DR:FireServer(humanoid, humanoid.MaxHealth * 2, 0, 0) -- Dégâts doublés pour one-shot
+                end)
+            end
         end
     end
-end
+end)
+
+local lastKill = 0
+game:GetService("RunService").Stepped:Connect(function()
+    if tick() - lastKill > math.random(0.1, 0.3) then
+        lastKill = tick()
+    end
+end)
