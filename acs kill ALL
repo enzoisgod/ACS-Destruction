@@ -1,4 +1,4 @@
-local DR = game:GetService("ReplicatedStorage")["ACS_Engine"].Eventos.Damage
+local DR = game:GetService("ReplicatedStorage")["Site95Remote"].RemoteEvent.Damage
 
 while true do
     wait(1) 
