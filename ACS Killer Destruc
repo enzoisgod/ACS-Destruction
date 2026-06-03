@@ -9,7 +9,7 @@ local Settings = {
  
 for i,v in pairs(game:GetDescendants()) do
     if v:IsA("MeshPart") or v:IsA("Part") then
-        game.ReplicatedStorage.ACS_Engine.Eventos.Hit:FireServer(v.Position, v, v.Position, Enum.Material.Plastic, Settings)
+        game.ReplicatedStorage["ACS_Engine"]..Eventos.Hit:FireServer(v.Position, v, v.Position, Enum.Material.Plastic, Settings)
     end
 end
  
