@@ -1,0 +1,13 @@
+local ACS = game:GetService("ReplicatedStorage"):WaitForChild("ACS_Engine")
+local Eventos = ACS:WaitForChild("Eventos")
+local Players = game:GetService("Players")
+
+local connection = game:GetService("RunService").Heartbeat:Connect(function()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            pcall(function()
+                Eventos.Render:FireServer(true, player.Name)
+            end)
+        end
+    end
+end)
